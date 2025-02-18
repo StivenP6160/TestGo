@@ -6,10 +6,10 @@ import (
 )
 
 type album struct {
-	ID string `json:"id"`
-	Title string `json:"title"`
-	Artist string `json:"artist"`
-	Price float64 `json:"price"`
+	ID 		string 	`json:"id"`
+	Title 	string 	`json:"title"`
+	Artist 	string 	`json:"artist"`
+	Price 	float64 `json:"price"`
 }
 
 var albums = []album{
@@ -34,11 +34,40 @@ func postAlbums(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, newAlbum)
 }
 
+func getAlbumsByID(c *gin.Context) {
+	id := c.Param("id")
+
+	for _, a := range albums {
+		if a.ID == id {
+			c.IndentedJSON(http.StatusOK, a)
+			return
+		}
+	}
+
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "álbum no encontrado"})
+
+}
+
+func deleteAlbum(c *gin.Context) {
+	id := c.Param("id")
+
+	for i, a := range albums {
+		if a.ID == id{
+			albums = append(albums[:i], albums[i+1:]...)
+			c.IndentedJSON(http.StatusOK, gin.H{"message": "álbum eliminado"})
+			return
+		}
+	}
+
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "álbum no encontrado"})
+}
+
 func main()  {
 	router := gin.Default()
 
 	router.GET("/albums", getAlbums)
+	router.GET("/albums/:id", getAlbumsByID)
 	router.POST("/albums", postAlbums)
-
+	router.DELETE("/albums/:id", deleteAlbum)
 	router.Run("localhost:8080")
 }
