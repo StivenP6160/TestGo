@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"fmt"
 	"log"
+	"html/template"
 )
 
 type Page struct {
@@ -27,18 +28,27 @@ func loadPage(title string) (*Page, error) {
 return &Page{Title: title, Body: body}, nil
 }
 
-func handler (w http.ResponseWriter, r *http.Request){
-	fmt.Fprintf(w, "Hola! Me gustan los %s", r.URL.Path[1:])
+// Visualizar y cargar las páginas existentes
+func viewHandler (w http.ResponseWriter, r *http.Request){
+	title := r.URL.Path[len("/view/"):]
+	p, _ := loadPage(title)
+	fmt.Fprintf(w, "<h1>%s</h1> <div>%s</div>", p.Title, p.Body)
+}
+
+// Renderizar y cargar plantillas html
+func editHandler(w http.ResponseWriter, r *http.Request){
+	title := r.URL.Path[len("/edit/"):]
+	p, _ := loadPage(title)
+
+	t, _ := template.ParseFiles("edit.html")
+	t.Execute(w, p)
+
 }
 
 func main() {
-	// p1 := &Page{Title: "TestPage", Body: []byte("Esta es una página de muestra")}
-	// p1.save()
-
-	// p2, _ := loadPage("TestPage")
-	// fmt.Println(string(p2.Body))
-
-	http.HandleFunc("/", handler)
+	 
+	http.HandleFunc("/view/", viewHandler)
+	http.HandleFunc("/edit/", editHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
