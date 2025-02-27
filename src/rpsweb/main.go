@@ -10,6 +10,11 @@ func main() {
 	// Crear enrutador
 	router := http.NewServeMux()
 
+	// Manejador para servir los archivos estáticos
+	fs := http.FileServer(http.Dir("static"))
+	// Ruta para acceder alos archivos estáticos
+	router.Handle("/static/", http.StripPrefix("/static/", fs))
+
 	// Configurar rutas
 	router.HandleFunc("/", handlers.Index)
 	router.HandleFunc("/new", handlers.NewGame)
