@@ -8,7 +8,7 @@ import (
 )
 
 // username: password@tcp(localhost:3306)/database
-const url = "root:clave_root@tcp(localhost:3306)/goweb_db"
+const url = "root:Ti2023*@tcp(localhost:3306)/goweb_db"
 
 //Guarda la conexión
 var db *sql.DB
@@ -23,7 +23,7 @@ func Connect() {
 	db = conection
 }
 
-//Realiza la conexión
+//Cerrar la conexión
 func Close() {
 	db.Close()
 }
@@ -47,8 +47,9 @@ func ExistsTable(tableName string) bool {
 
 }
 
-//Crea una tabla 
-func CreateTable(schema string, name string) {
+//Crea una tabla con la base de datos
+func CreateTable(schema, name string) {
+	
 	if !ExistsTable(name) {
 		_, err := db.Exec(schema)
 		if err != nil {

@@ -8,7 +8,7 @@ import (
 )
 
 // username: password@tcp(localhost:3306)/database
-const url = "root:clave_root@tcp(localhost:3306)/goweb_db"
+const url = "root:Ti2023*@tcp(localhost:3306)/goweb_db"
 
 //Guarda la conexión
 var db *sql.DB

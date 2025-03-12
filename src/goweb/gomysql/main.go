@@ -13,12 +13,12 @@ func main() {
 	//db.CreateTable(models.UserSchema, "users")
 
 	// Código para crear el registro
-	user := models.CreateUser("Stiven", "patino6160", "stiven@example.com")
-	fmt.Println(user)
+	// user := models.CreateUser("Stiven", "patino6160", "stiven@example.com")
+	// fmt.Println(user)
 
 	//Código para listar todos los registros
-	//users := models.ListUsers()
-	//fmt.Println(users)
+	users := models.ListUsers()
+	fmt.Println(users)
 
 	//Código para listar un usuario especifico
 	//user := models.GetUser(2)

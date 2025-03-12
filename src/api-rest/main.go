@@ -1,4 +1,4 @@
-package main
+package main 
 
 import (
 	"apirest/handlers"
@@ -7,6 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 )
+
 func main() {
 	//Rutas
 	mux := mux.NewRouter()
